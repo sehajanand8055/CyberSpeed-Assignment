@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class DependencyHandler : MonoBehaviour
 {
+
     private static DependencyHandler _instance;
     private static Dictionary<Type, object> services = new Dictionary<Type, object>();
+
+    private HandlerService[] initializables;
 
     public static DependencyHandler Instance
     {
@@ -32,6 +35,31 @@ public class DependencyHandler : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
+    private void OnEnable()
+    {
+        initializables = FindObjectsOfType<HandlerService>(true);
+        if (initializables != null)
+        {
+            foreach (var intializable in initializables)
+            {
+                intializable.Initialize();
+            }
+        }
+    }
+
+    private void Start()
+    {
+        if (initializables != null)
+        {
+            foreach (var intializable in initializables)
+            {
+                intializable.MakeRegistrations();
+            }
+        }
+    }
+
+
 
     public void RegisterDependency<T>(object serviceObj)
     {

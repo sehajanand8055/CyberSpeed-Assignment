@@ -6,15 +6,13 @@ using UnityEngine.UI;
 public class FlipCellView : MonoBehaviour
 {
     [SerializeField] private Button button;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Image image;
+
+    private int uniqueId;
+
+    public void InitCell(int id, Sprite sprite)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        uniqueId = id;
+        image.sprite = sprite;
     }
 }
