@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class DependencyHandler : MonoBehaviour
 {
     private static DependencyHandler _instance;
+    private static Dictionary<Type, object> services = new Dictionary<Type, object>();
 
     public static DependencyHandler Instance
     {
@@ -30,15 +32,20 @@ public class DependencyHandler : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    public void RegisterDependency<T>(object serviceObj)
+    {
+        services[typeof(T)] = serviceObj;
     }
 
-    // Update is called once per frame
-    void Update()
+    public T GetService<T>()
     {
-
+        Debug.Log($"count of service dictionary is {services.Count}");
+        if (services.TryGetValue(typeof(T), out object service))
+        {
+            return (T)service;
+        }
+        throw new Exception($"Service of type {typeof(T)} not registered!");
     }
+
 }
