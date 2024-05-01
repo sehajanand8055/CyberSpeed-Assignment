@@ -68,7 +68,6 @@ public class DependencyHandler : MonoBehaviour
 
     public T GetService<T>()
     {
-        Debug.Log($"count of service dictionary is {services.Count}");
         if (services.TryGetValue(typeof(T), out object service))
         {
             return (T)service;

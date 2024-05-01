@@ -24,7 +24,7 @@ public class ModeSelectionHandler : HandlerService
 
         startGameButton.onClick.AddListener(() =>
         {
-            OnModeSelected?.Invoke(2, 2);
+            OnModeSelected?.Invoke(5, 6);
         });
     }
 
